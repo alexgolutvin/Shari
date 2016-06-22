@@ -35,9 +35,15 @@ public class NavigationController: UINavigationController {
     }
    
     func handlePanGesture(gestureRecognizer: UIPanGestureRecognizer) {
+        guard let
+            parentView = parentViewController?.view,
+            parentTargetView = parentNavigationController?.parentTargetView(),
+            backgroundView = ModalAnimator.overlayView(parentTargetView)
+        else {
+            return
+        }
         
-        let location = gestureRecognizer.locationInView(self.parentViewController!.view)
-        let backgroundView = ModalAnimator.overlayView(self.parentNavigationController!.parentTargetView())!
+        let location = gestureRecognizer.locationInView(parentView)
         let degreeY = location.y - self.previousLocation.y
 
         switch gestureRecognizer.state {
@@ -95,7 +101,7 @@ public class NavigationController: UINavigationController {
                 )
                 
             } else if dismissControllSwipeDown && self.view.frame.minY - originalLocation.y > minDeltaDownSwipe {
-                si_dismissDownSwipeModalView(nil)
+                parentNavigationController?.si_dismissDownSwipeModalView(nil)
             } else {
 
                 UIView.animateWithDuration(
