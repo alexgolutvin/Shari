@@ -13,7 +13,7 @@ import UIKit
 }
 
 
-public class NavigationController: UINavigationController {
+public class NavigationController: UINavigationController, UIGestureRecognizerDelegate {
 
     public var si_delegate: NavigationControllerDelegate?
     public var parentNavigationController: UINavigationController?
@@ -27,11 +27,20 @@ public class NavigationController: UINavigationController {
     var previousLocation = CGPointZero
     var originalLocation = CGPointZero
     var originalFrame = CGRectZero
-        
+    
+    deinit{
+        parentNavigationController?.interactivePopGestureRecognizer?.delegate = nil
+    }
+    
     override public func viewDidLoad() {
+        parentNavigationController?.interactivePopGestureRecognizer?.delegate = self
         originalFrame = self.view.frame
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(NavigationController.handlePanGesture(_:)))
         self.view.addGestureRecognizer(panGestureRecognizer)
+    }
+    
+    public func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return false
     }
    
     func handlePanGesture(gestureRecognizer: UIPanGestureRecognizer) {
