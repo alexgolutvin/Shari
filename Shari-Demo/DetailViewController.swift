@@ -17,9 +17,9 @@ class DetailViewController: UIViewController {
 
     // MARK: - Button Actions
 
-    @IBAction func buttonDidTap(sender: AnyObject) {
+    @IBAction func buttonDidTap(_ sender: AnyObject) {
 
-        let modalNavigationController = self.storyboard!.instantiateViewControllerWithIdentifier("ModalNavigationController") as! Shari.NavigationController
+        let modalNavigationController = self.storyboard!.instantiateViewController(withIdentifier: "ModalNavigationController") as! Shari.NavigationController
 
         //Shari.BackgroundColorOfOverlayView = UIColor.redColor()
         modalNavigationController.parentNavigationController = self.navigationController

@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "41F16B9B338DB4E151757A98F072CC11116B0A68",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "B2DF9AAD710CE03B0B9A1731207E1E80BCFE8A72" : 0,
+    "41F16B9B338DB4E151757A98F072CC11116B0A68" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "AF86A1D5-86DB-46D9-AB62-1739E6CD49F7",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "B2DF9AAD710CE03B0B9A1731207E1E80BCFE8A72" : "",
+    "41F16B9B338DB4E151757A98F072CC11116B0A68" : "Shari\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Shari",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Shari.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/alexgolutvin\/Shari.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "41F16B9B338DB4E151757A98F072CC11116B0A68"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.yandex-team.ru\/kinopoisk\/kinopoisk-ios.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "B2DF9AAD710CE03B0B9A1731207E1E80BCFE8A72"
+    }
+  ]
+}

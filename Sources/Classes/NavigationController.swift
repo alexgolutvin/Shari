@@ -9,59 +9,59 @@
 import UIKit
 
 @objc public protocol NavigationControllerDelegate {
-    optional func navigationControllerDidSpreadToEntire(navigationController: UINavigationController)
+    @objc optional func navigationControllerDidSpreadToEntire(_ navigationController: UINavigationController)
 }
 
 
-public class NavigationController: UINavigationController, UIGestureRecognizerDelegate {
+open class NavigationController: UINavigationController, UIGestureRecognizerDelegate {
 
-    public var si_delegate: NavigationControllerDelegate?
-    public var parentNavigationController: UINavigationController?
+    open var si_delegate: NavigationControllerDelegate?
+    open var parentNavigationController: UINavigationController?
     
-    public var minDeltaUpSwipe: CGFloat = 50
-    public var minDeltaDownSwipe: CGFloat = 50
+    open var minDeltaUpSwipe: CGFloat = 50
+    open var minDeltaDownSwipe: CGFloat = 50
     
-    public var dismissControllSwipeDown = false
-    public var fullScreenSwipeUp = true
+    open var dismissControllSwipeDown = false
+    open var fullScreenSwipeUp = true
     
-    var previousLocation = CGPointZero
-    var originalLocation = CGPointZero
-    var originalFrame = CGRectZero
+    var previousLocation = CGPoint.zero
+    var originalLocation = CGPoint.zero
+    var originalFrame = CGRect.zero
     
     deinit{
         parentNavigationController?.interactivePopGestureRecognizer?.delegate = nil
     }
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         parentNavigationController?.interactivePopGestureRecognizer?.delegate = self
         originalFrame = self.view.frame
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(NavigationController.handlePanGesture(_:)))
         self.view.addGestureRecognizer(panGestureRecognizer)
     }
     
-    public func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+    open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return false
     }
    
-    func handlePanGesture(gestureRecognizer: UIPanGestureRecognizer) {
+    func handlePanGesture(_ gestureRecognizer: UIPanGestureRecognizer) {
         guard let
-            parentView = parentViewController?.view,
-            parentTargetView = parentNavigationController?.parentTargetView(),
-            backgroundView = ModalAnimator.overlayView(parentTargetView)
+            parentView = parent?.view,
+            let parentTargetView = parentNavigationController?.parentTargetView(),
+            let backgroundView = ModalAnimator.overlayView(parentTargetView)
         else {
             return
         }
         
-        let location = gestureRecognizer.locationInView(parentView)
+        let location = gestureRecognizer.location(in: parentView)
         let degreeY = location.y - self.previousLocation.y
 
         switch gestureRecognizer.state {
-        case UIGestureRecognizerState.Began :
+        case UIGestureRecognizerState.began :
             
             originalLocation = self.view.frame.origin
             break
 
-        case UIGestureRecognizerState.Changed :
+        case UIGestureRecognizerState.changed :
             
             var frame = self.view.frame
             frame.origin.y += degreeY
@@ -72,17 +72,17 @@ public class NavigationController: UINavigationController, UIGestureRecognizerDe
 
             break
 
-        case UIGestureRecognizerState.Ended :
+        case UIGestureRecognizerState.ended :
             
             if fullScreenSwipeUp &&  originalLocation.y - self.view.frame.minY > minDeltaUpSwipe {
                 
-                UIView.animateWithDuration(
-                    0.2,
+                UIView.animate(
+                    withDuration: 0.2,
                     animations: { [weak self] in
                         guard let strongslef = self else { return }
                         
                         var frame = strongslef.originalFrame
-                        let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.height
+                        let statusBarHeight = UIApplication.shared.statusBarFrame.height
                         frame.origin.y = statusBarHeight
                         frame.size.height -= statusBarHeight
                         strongslef.view.frame = frame
@@ -91,17 +91,17 @@ public class NavigationController: UINavigationController, UIGestureRecognizerDe
                         
                     }, completion: { (result) -> Void in
                         
-                        UIView.animateWithDuration(
-                            0.1,
+                        UIView.animate(
+                            withDuration: 0.1,
                             delay: 0.0,
-                            options: UIViewAnimationOptions.CurveLinear,
+                            options: UIViewAnimationOptions.curveLinear,
                             animations: { () -> Void in
                                 backgroundView.alpha = 0.0
                             },
                             completion: { [weak self] result in
                                 guard let strongslef = self else { return }
                               
-                                gestureRecognizer.enabled = false
+                                gestureRecognizer.isEnabled = false
                                 strongslef.si_delegate?.navigationControllerDidSpreadToEntire?(strongslef)
                                 
                             }
@@ -113,12 +113,12 @@ public class NavigationController: UINavigationController, UIGestureRecognizerDe
                 parentNavigationController?.si_dismissDownSwipeModalView(nil)
             } else {
 
-                UIView.animateWithDuration(
-                    0.6,
+                UIView.animate(
+                    withDuration: 0.6,
                     delay: 0.0,
                     usingSpringWithDamping: 0.5,
                     initialSpringVelocity: 0.1,
-                    options: UIViewAnimationOptions.CurveLinear,
+                    options: UIViewAnimationOptions.curveLinear,
                     animations: { [weak self] in
                         guard let strongslef = self else { return }
                         
@@ -132,7 +132,7 @@ public class NavigationController: UINavigationController, UIGestureRecognizerDe
 
                     completion: { (result) -> Void in
 
-                        gestureRecognizer.enabled = true
+                        gestureRecognizer.isEnabled = true
 
                 })
                 

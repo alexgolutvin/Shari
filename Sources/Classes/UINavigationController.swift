@@ -9,7 +9,7 @@
 import UIKit
 
 enum InternalStructureViewType:Int {
-    case ToView = 900, ScreenShot = 910, Overlay = 920
+    case toView = 900, screenShot = 910, overlay = 920
 }
 
 public extension UINavigationController {
@@ -18,13 +18,13 @@ public extension UINavigationController {
         return self.view
     }
     
-    func si_presentViewController(toViewController:UIViewController) {
+    func si_presentViewController(_ toViewController:UIViewController) {
 
         toViewController.beginAppearanceTransition(true, animated: true)
         ModalAnimator.present(toViewController.view, fromView: self.parentTargetView()) { [weak self] in
             guard let strongslef = self else { return }
             toViewController.endAppearanceTransition()
-            toViewController.didMoveToParentViewController(strongslef)
+            toViewController.didMove(toParentViewController: strongslef)
             
         }
         
@@ -34,9 +34,9 @@ public extension UINavigationController {
 
     }
     
-    func si_dismissModalView(completion: (() -> Void)?) {
+    func si_dismissModalView(_ completion: (() -> Void)?) {
         
-        self.willMoveToParentViewController(nil)
+        self.willMove(toParentViewController: nil)
 
         ModalAnimator.dismiss(
             self.parentTargetView(),
@@ -48,9 +48,9 @@ public extension UINavigationController {
         
     }
     
-    func overlayViewDidTap(gestureRecognizer: UITapGestureRecognizer) {
+    func overlayViewDidTap(_ gestureRecognizer: UITapGestureRecognizer) {
         
-        self.willMoveToParentViewController(nil)
+        self.willMove(toParentViewController: nil)
 
         ModalAnimator.dismiss(
             self.parentTargetView(),
@@ -61,9 +61,9 @@ public extension UINavigationController {
 
     }
     
-    func si_dismissDownSwipeModalView(completion: (() -> Void)?) {
+    func si_dismissDownSwipeModalView(_ completion: (() -> Void)?) {
         
-        self.willMoveToParentViewController(nil)
+        self.willMove(toParentViewController: nil)
         
         ModalAnimator.dismiss(
             self.view.superview ?? self.parentTargetView(),

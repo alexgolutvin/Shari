@@ -18,28 +18,28 @@ class ModalTableViewController: UITableViewController, Shari.NavigationControlle
             nc.dismissControllSwipeDown = true
 //            nc.fullScreenSwipeUp = false
         }
-        self.tableView.scrollEnabled = false
+        self.tableView.isScrollEnabled = false
     }
     
     // MARK: - UITableViewDataSource
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 20
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-        cell.textLabel!.text = "Title #\(indexPath.row)"
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        cell.textLabel!.text = "Title #\((indexPath as NSIndexPath).row)"
         return cell
     }
     
     // MARK: - UITableViewDelegate
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let currentNavigationController = self.navigationController as! Shari.NavigationController
         
@@ -51,7 +51,7 @@ class ModalTableViewController: UITableViewController, Shari.NavigationControlle
     
     // MARK: - Button Actions
     
-    @IBAction func closeButtonDidTap(sender: AnyObject) {
+    @IBAction func closeButtonDidTap(_ sender: AnyObject) {
         
         let currentNavigationController = self.navigationController as! Shari.NavigationController
         currentNavigationController.parentNavigationController!.si_dismissModalView({ () -> Void in
@@ -61,9 +61,9 @@ class ModalTableViewController: UITableViewController, Shari.NavigationControlle
 
     // MARK: - Shari.NavigationControllerDelegate
 
-    func navigationControllerDidSpreadToEntire(navigationController: UINavigationController) {
+    func navigationControllerDidSpreadToEntire(_ navigationController: UINavigationController) {
 
-        self.tableView.scrollEnabled = true
+        self.tableView.isScrollEnabled = true
 
         print("spread to the entire")
 
